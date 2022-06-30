@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Results from "./Results";
 
 const Search = (props) => {
-  const [updated, setUpdated] = useState(false);
+  // const [updated, setUpdated] = useState(false);
   const [queryResults, setQueryResults] = useState(null);
   const store_id = useRef();
   const pname = useRef();
@@ -11,10 +11,7 @@ const Search = (props) => {
 
   const queryHandler = (event) => {
     event.preventDefault();
-    let st_id = store_id.current.value;
-    let name = pname.current.value;
-    let sku_no = sku.current.value;
-    let last = last_up.current.value;
+
     let queryData = {
       store_id: store_id.current.value ? store_id.current.value : null,
       product_name: pname.current.value ? pname.current.value : null,
@@ -41,7 +38,7 @@ const Search = (props) => {
       .then((data) => setQueryResults(JSON.parse(data)));
   };
   const updateStatusHandler = (data) => {
-    setUpdated(true);
+    // setUpdated(true);
     setQueryResults(null);
   };
   return (

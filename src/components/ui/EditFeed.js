@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 const EditFeed = (props) => {
   const [storeId, setStoreID] = useState(props.data.store_id);
   const [pname, setPName] = useState(props.data.product_name);
   const [sku, setSKU] = useState(props.data.sku);
   const [price, setPrice] = useState(props.data.price);
-  const [lastModified, setLastModified] = useState(props.data.date);
 
   const storeChangeHandler = (event) => {
     setStoreID(event.target.value);
