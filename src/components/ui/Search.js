@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import Results from "./Results";
 
 const Search = (props) => {
-  const [queryResults, setQueryResults] = useState(true);
+  const [updated, setUpdated] = useState(false);
+  const [queryResults, setQueryResults] = useState(null);
   const store_id = useRef();
   const pname = useRef();
   const sku = useRef();
@@ -14,13 +15,34 @@ const Search = (props) => {
     let name = pname.current.value;
     let sku_no = sku.current.value;
     let last = last_up.current.value;
-    console.log(st_id, name, sku_no, last);
+    let queryData = {
+      store_id: store_id.current.value ? store_id.current.value : null,
+      product_name: pname.current.value ? pname.current.value : null,
+      sku: sku.current.value ? sku.current.value : null,
+      date: last_up.current.value ? last_up.current.value : null,
+    };
+    console.log(queryData);
     const queryURL = "http://localhost:8000/api/search/";
+    setQueryResults(null);
     fetch(queryURL, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(queryData),
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          alert(res.statusText);
+        }
+      })
+      .then((data) => setQueryResults(JSON.parse(data)));
+  };
+  const updateStatusHandler = (data) => {
+    setUpdated(true);
+    setQueryResults(null);
   };
   return (
     <div>
@@ -90,7 +112,9 @@ const Search = (props) => {
           <hr />
         </div>
         {/* only show when we have data */}
-        {!!queryResults && <Results />}
+        {!!queryResults && (
+          <Results data={queryResults} updated={updateStatusHandler} />
+        )}
       </div>
     </div>
   );

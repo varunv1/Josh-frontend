@@ -6,12 +6,12 @@ const Header = (props) => {
       <div className="container-fluid">
         <a className="navbar-brand text-white fs-2">Price Feeds</a>
 
-        <button
+        {/* <button
           className="btn btn-outline-warning text-white btn-lg"
           type="submit"
         >
           Login
-        </button>
+        </button> */}
       </div>
     </nav>
   );

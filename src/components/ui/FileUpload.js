@@ -3,6 +3,7 @@ import { CSVLink } from "react-csv";
 
 const FileUpload = (props) => {
   const csv = useRef();
+  const [uploadStatus, setUploadStatus] = useState(null);
   const [csvFile, setCSVFile] = useState();
   const data = "Store ID,SKU,Product Name,Price";
   const csvDownloadHandler = () => {
@@ -24,8 +25,10 @@ const FileUpload = (props) => {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
+        setUploadStatus(true);
       })
       .catch((error) => {
+        setUploadStatus(false);
         console.error("Error:", error);
       });
   };
@@ -82,6 +85,8 @@ const FileUpload = (props) => {
                 <em className="fs-5">
                   Note:Please upload file in<strong> correct format.</strong>
                 </em>
+                {!!uploadStatus && <p>Upload Success</p>}
+                {uploadStatus === false && <p>Upload Failed</p>}
               </div>
             </div>
 
